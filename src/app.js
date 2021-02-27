@@ -7,8 +7,10 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
 import { GameRouter } from "./games/GameRouter";
+import { authorizationErrorHandler } from "./utils/authorizationErrorHandler";
 import { bodyParserErrorHandler } from "./utils/bodyParserErrorHandler";
 import { errorHandler } from "./utils/errorHandler";
+import { jwtCheck } from "./utils/jwtCheck";
 import { notFoundHandler } from "./utils/notFoundHandler";
 import { validationErrorHandler } from "./utils/validationErrorHandler";
 
@@ -50,11 +52,16 @@ app.use(
   })
 );
 
+app.use(jwtCheck);
+
 // Our application routes:
 app.use("/v1/games", GameRouter);
 
 // Handle requests matching no routes.
 app.use(notFoundHandler);
+
+// Handle unauthorized requests.
+app.use(authorizationErrorHandler);
 
 // Handle body parser syntax errors
 app.use(bodyParserErrorHandler);
