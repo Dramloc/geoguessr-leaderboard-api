@@ -28,9 +28,9 @@ jobs:
       # uses: dokku/github-action@ad4a87c76347c217e3e5f183510a119e9a0a90f8
         uses: dokku/github-action@v1.0.1
         with:
-          # The branch to deploy when pushing to Dokku (default: master)
+          # The branch to deploy when pushing to Dokku
           branch: main
           # The dokku app's git repository url (in SSH format)
-          git_remote_url: dokku@geoguessr-leaderboard-dokku.dramloc.dev:geoguessr-leaderboard-api
+          git_remote_url: ssh://dokku@geoguessr-leaderboard-dokku.dramloc.dev/geoguessr-leaderboard-api
           # A private SSH key that has push acces to your Dokku instance
           ssh_private_key: ${{ secrets.DOKKU_SSH_KEY }}
