@@ -4,14 +4,8 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,6 +25,6 @@ jobs:
           # The branch to deploy when pushing to Dokku
           branch: main
           # The dokku app's git repository url (in SSH format)
-          git_remote_url: ssh://dokku@geoguessr-leaderboard-dokku.dramloc.dev/geoguessr-leaderboard-api
+          git_remote_url: ssh://dokku@geoguessr-leaderboard-dokku.dramloc.dev:22/geoguessr-leaderboard-api
           # A private SSH key that has push acces to your Dokku instance
           ssh_private_key: ${{ secrets.DOKKU_SSH_KEY }}
