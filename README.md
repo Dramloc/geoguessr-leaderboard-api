@@ -1,4 +1,4 @@
-# express-mongoose-template
+# geoguessr-leaderboard-api
 
 Simple template using express and mongoose for building REST APIs.
 

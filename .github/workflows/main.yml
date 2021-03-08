@@ -1,31 +1,30 @@
 name: main
 
-on:
-  push:
-    branches:
-      - "main"
+on: [push, pull_request]
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
+      - name: 🛑 Cancel previous runs
         uses: styfle/cancel-workflow-action@0.8.0
         with:
           access_token: ${{ github.token }}
 
-      - name: ⬇️ Checkout repo
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: ⎔ Setup node
+      - name: 🏗 Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14
 
-      - name: 📥 Download deps
-        run: yarn install
+      - name: 📥 Install dependencies
+        uses: bahmutov/npm-install@v1
 
-      - name: ▶ Run tests
+      - name: ✅ Run tests
         run: yarn test
         env:
           CI: true
@@ -33,7 +32,9 @@ jobs:
       - name: 📦 Run build
         run: yarn build
 
+      # only deploy main branch on pushes
       - name: 🚀 Deploy
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         uses: dokku/github-action@v1.0.1
         with:
           branch: main
